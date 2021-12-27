@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TrackController;
+use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\DepositController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +44,11 @@ Route::get('/track', function () {
 Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('/tracker', TrackController::class)->middleware('auth');
+
+Route::any('/tracs', [SearchController::class, 'index']);
+
+Route::get('/receipt/{id}', [ReceiptController::class, 'show'])->middleware('auth');
+
+Route::resource('/deposit', DepositController::class)->middleware('auth');

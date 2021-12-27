@@ -15,6 +15,16 @@ class CreateTracksTable extends Migration
     {
         Schema::create('tracks', function (Blueprint $table) {
             $table->id();
+            $table->string('tracking_id')->unique();
+            $table->string('start')->nullable();
+            $table->string('current')->nullable();
+            $table->string('destination')->nullable();
+            $table->string('weight')->nullable();
+            $table->string('name')->nullable();
+            $table->string('delivered_name')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('delivered_phone')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }
