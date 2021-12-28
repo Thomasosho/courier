@@ -41,7 +41,7 @@ Route::get('/track', function () {
     return view('track');
 });
 
-Auth::routes(['register' => false]);
+Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
