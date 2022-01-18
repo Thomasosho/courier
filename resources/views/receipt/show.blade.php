@@ -120,137 +120,232 @@ hr {
 </style>
 
 @section('content')
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-
 <div class="page-content container">
     <div class="page-header text-blue-d2">
         <h1 class="page-title text-secondary-d1">
             <small class="page-info">
                 <i class="fa fa-angle-double-right text-80"></i>
-                ID: #{{$track->tracking_id}}
+                ID: {{$track->tracking_id}}
             </small>
         </h1>
 
         <div class="page-tools">
             <div class="action-buttons">
-                <a class="btn bg-white btn-light mx-1px text-95" href="#" data-title="Print" onclick="window.print();">
-                    <i class="mr-1 fa fa-print text-primary-m1 text-120 w-2"></i>
-                    Print/PDF
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="container px-0">
-        <div class="row mt-4">
-            <div class="col-12 col-lg-10 offset-lg-1">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="text-center text-150 text-blue">
-                            <i class="fa fa-truck mr-2"></i>
-                            <span>Delta Courier Services</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- .row -->
-
-                <hr class="row brc-default-l1 mx-n1 mb-4" />
-
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div>
-                            <span class="text-600 text-110 text-blue align-middle">{{$track->name}}</span>
-                        </div>
-                        <div class="text-grey-m2">
-                            <div class="my-1">
-                                {{$track->start}}
-                            </div>
-                            <div class="my-1">
-                                {{$track->email}}
-                            </div>
-                            <div class="my-1"><i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">{{$track->phone}}</b></div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-
-                    <div class="text-95 col-sm-6 align-self-start d-sm-flex justify-content-end">
-                        <hr class="d-sm-none" />
-                        <div class="text-grey-m2">
-                            <div class="mt-1 mb-2 text-secondary-m1 text-600 text-125">
-                                Delivered to
-                            </div>
-
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Name:</span> {{$track->delivered_name}}</div>
-
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Issue Date:</span> {{$track->created_at->todatestring()}}</div>
-
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Address:</span> {{$track->destination}}</div>
-
-                            <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90">Phone:</span> {{$track->delivered_phone}}</div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                </div>
-
-                <div class="mt-4">
-                    <div class="row text-600 text-white bgc-default-tp1 py-25">
-                        <div class="col-9 col-sm-5">Description(s)</div>
-                        <div class="d-none d-sm-block col-4 col-sm-2">Qty</div>
-                        <div class="d-none d-sm-block col-sm-2">Unit Prices</div>
-                        <div class="col-2">Total Amount</div>
-                    </div>
-
-                    <div class="text-95 text-secondary-d3">
-                        <div class="row mb-2 mb-sm-0 py-25">
-                            <div class="col-9 col-sm-5">{{$track->description}}</div>
-                            <div class="d-none d-sm-block col-2">{{$track->qty}}</div>
-                            <div class="d-none d-sm-block col-2 text-95">$ {{$track->price}}</div>
-                            <div class="col-2 text-secondary-d2">$ {{$track->amount}}</div>
-                        </div>
-                    </div>
-
-                    <div class="row border-b-2 brc-default-l2"></div>
-                    <div class="row mt-3">
-
-                        <div class="col-12 col-sm-5 text-grey text-90 order-first order-sm-last">
-                            <div class="row my-2">
-                                <div class="col-7 text-right">
-                                    SubTotal
-                                </div>
-                                <div class="col-5">
-                                    <span class="text-120 text-secondary-d1">$ {{$track->amount}}</span>
-                                </div>
-                            </div>
-
-                            <div class="row my-2">
-                                <div class="col-7 text-right">
-                                    Tax (10%)
-                                </div>
-                                <div class="col-5">
-                                    <span class="text-110 text-secondary-d1">$ {{$tax}}</span>
-                                </div>
-                            </div>
-
-                            <div class="row my-2 align-items-center bgc-primary-l3 p-2">
-                                <div class="col-7 text-right">
-                                    Total Amount
-                                </div>
-                                <div class="col-5">
-                                    <span class="text-150 text-success-d3 opacity-2">$ {{$total}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr />
-
-                    <div>
-                        <span class="text-secondary-d1 text-105">Thank you for your business</span>
-                    </div>
-                </div>
+                <button class="btn bg-white btn-light mx-1px text-95" onclick="Convert_HTML_To_PDF();">Generate PDF</button>
             </div>
         </div>
     </div>
 </div>
 
+<div id="contentToPrint">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <div class="text-center text-uppercase text-150 text-blue">
+                    <i class="fa fa-truck mr-2"></i>
+                    <span>Delta Courier Services</span>
+                </div>
+            </div>
+            <div class="col-4">
+                <h5 class="text-uppercase">Receipt Bill: {{$track->tracking_id}}</h5>
+            </div>
+            <div class="col-4">
+                <span class="text-uppercase" style="border: 1px #ff4821 dotted; padding: 2px;">Origin: {{$track->start}}</span>
+                <span class="text-uppercase" style="border: 1px #ff4821 dotted; padding: 2px;">Destination: {{$track->destination}}</span>
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col-4">
+                <!-- 1 -->
+                <div class="row">
+                    <span style="background-color: #ff4821; height: 50px; margin: 0 !important;">
+                        <h6 class="text-uppercase px-1 py-4" style="color: #ffffff; line-height: 0.0; margin-bottom: 0;">
+                            <span style="width: 100%; background-color: #971c02; padding: 5px;">1.</span>
+                            sender:
+                        </h6>
+                    </span>
+                </div>
+                <div class="row">
+                    <div class="col-6" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Tracking Number: </label>
+                        <input type="text" class="form-control" value="{{$track->tracking_id}}" disabled>
+                    </div>
+                    <div class="col-6" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Sender's Name in block letters: </label>
+                        <input type="text" class="form-control" value="{{$track->name}}" disabled>
+                    </div>
+
+                    <div class="col-12" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Company: </label>
+                        <input type="text" class="form-control" value="Delta Courier Services" disabled>
+                    </div>
+
+                    <div class="col-6" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Issue Date: </label>
+                        <input type="text" class="form-control" value="{{$track->created_at->todatestring()}}" disabled>
+                    </div>
+                    <div class="col-12" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Telephone: </label>
+                        <span style="color: #971c02;">{{$track->phone}}</span>
+                    </div>
+                </div>
+                <!-- 2 -->
+                <div class="row">
+                    <span style="background-color: #ff4821; height: 50px; margin: 0 !important;">
+                        <h6 class="text-uppercase px-1 py-4" style="color: #ffffff; line-height: 0.0; margin-bottom: 0;">
+                            <span style="width: 100%; background-color: #971c02; padding: 5px;">2.</span>
+                            Destination:
+                        </h6>
+                    </span>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Name: </label>
+                        <input type="text" class="form-control" value="{{$track->delivered_name}}" disabled>
+                    </div>
+
+                    <div class="col-12" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Address: </label>
+                        <input type="text" class="form-control" value="{{$track->destination}}" disabled>
+                    </div>
+
+                    <div class="col-12" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Telephone: </label>
+                        <span style="color: #971c02;">{{$track->delivered_phone}}</span>
+                    </div>
+                </div>
+                <!-- 3 -->
+                <div class="row">
+                    <span style="background-color: #ff4821; height: 50px; margin: 0 !important;">
+                        <h6 class="text-uppercase px-1 py-4" style="color: #ffffff; line-height: 0.0; margin-bottom: 0;">
+                            <span style="width: 100%; background-color: #971c02; padding: 5px;">3.</span>
+                            Sender's Authorised Signature:
+                        </h6>
+                    </span>
+                </div>
+                <div class="row">
+                    <div class="col-7" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Signature: </label>
+                        <input type="text" class="form-control" value="{{$track->name}}" disabled>
+                    </div>
+
+                    <div class="col-5" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Date: </label>
+                        <input type="text" class="form-control" value="{{$track->created_at->todatestring()}}" disabled>
+                    </div>
+                </div>
+            </div>
+            <!-- 4 -->
+            <div class="col-4">
+                <div class="row">
+                    <span style="background-color: #ffffff; height: 50px; margin: 0 !important;">
+                        <h6 class="text-uppercase px-1 py-4" style="color: #000000; line-height: 0.0; margin-bottom: 0;">
+                            <span style="width: 100%; background-color: #971c02; padding: 5px; color: #ffffff;">4.</span>
+                            Details of Goods and Services:
+                        </h6>
+                    </span>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Goods Description: </label>
+                        <p>
+                            {{$track->description}}
+                        </p>
+                    </div>
+                    <div class="col-4" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Quantity: </label>
+                        <p>
+                            {{$track->qty}}
+                        </p>
+                    </div>
+
+                    <div class="col-4" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Tax: </label>
+                        <p>
+                            $ {{$tax}}
+                        </p>
+                    </div>
+
+                    <div class="col-4" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Total: </label>
+                        <p>
+                            $ {{$total}}
+                        </p>
+                    </div>
+                </div>
+                <!-- signature -->
+                <div class="row">
+                    <div class="col-12" style="border: 1px stroke #000;">
+                        <label for="text" class="text-uppercase" style="font-weight: bold;">Approval: </label>
+                        <p class="px-5">
+                            <img src="{{ asset('img/approved.png') }}" style="width: -webkit-fill-available;">
+                            <img src="{{ asset('img/stamp.png') }}" style="width: -webkit-fill-available;">
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- 5 -->
+            <div class="col-4">
+                <div class="row">
+                    <span style="background-color: #ff4821; height: 50px; margin: 0 !important;">
+                        <h6 class="text-uppercase px-1 py-4" style="color: #ffffff; line-height: 0.0; margin-bottom: 0;">
+                            <span style="width: 100%; background-color: #971c02; padding: 5px;">5.</span>
+                            Dimensions/Weight
+                        </h6>
+                    </span>
+                </div>
+                <div class="row">
+                    <div class="col-6 p-5" style="border: 1px dotted #000;">
+                        <label for="text" class="text-capitalize" style="font-weight: bold;">Number of Pieces </label>
+                        <p>
+                            {{$track->qty}}
+                        </p>
+                    </div>
+                    <div class="col-6 p-5" style="border: 1px dotted #000;">
+                        <label for="text" class="text-capitalize" style="font-weight: bold;">Weight </label>
+                        <p>
+                            {{$track->weight}}
+                        </p>
+                    </div>
+                </div>
+                <br>
+                <!-- 6 -->
+                <div class="row">
+                    <span style="background-color: #ff4821; height: 50px; margin: 0 !important;">
+                        <h6 class="text-uppercase px-1 py-4" style="color: #ffffff; line-height: 0.0; margin-bottom: 0;">
+                            <span style="width: 100%; background-color: #971c02; padding: 5px;">6.</span>
+                            Total Expenditure
+                        </h6>
+                    </span>
+                </div>
+                <div class="row">
+                    <div class="col-12 p-5" style="border: 1px dotted #000;">
+                        <label for="text" class="text-capitalize" style="font-weight: bold;">Volumetric Charged Weight </label>
+                        <div class="row">
+                            <div class="col-6 px-3">
+                                <p>
+                                    {{$track->weight}}
+                                </p>
+                            </div>
+                            <div class="col-6 px-3">
+                                <p>
+                                    KG
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 p-5" style="border: 1px dotted #000;">
+                        <label for="text" class="text-capitalize" style="font-weight: bold;">Transport Collect Sticker No:</label>
+                        <p>
+                            DHPA09VOL{{$track->weight}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <col-12>
+                <span class="text-secondary-d1 text-105">Thank you for your business</span>
+            </col-12>
+        </div>
+    </div>
+</div>
 @endsection
