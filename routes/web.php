@@ -5,6 +5,7 @@ use App\Http\Controllers\TrackController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,9 @@ Route::get('/track', function () {
 });
 
 Auth::routes(['register' => false]);
+
+Route::get('/changePassword', [App\Http\Controllers\HomeController::class, 'showChangePasswordGet'])->name('changePasswordGet');
+Route::post('/changePassword', [App\Http\Controllers\HomeController::class, 'changePasswordPost'])->name('changePasswordPost');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

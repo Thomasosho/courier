@@ -87,6 +87,9 @@
                                         {{ __('Logout') }}
                                     </a>
 
+                                    <!-- change password -->
+                                    <a class="dropdown-item" href="{{ route('changePasswordGet') }}">Change Password </a>
+
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
